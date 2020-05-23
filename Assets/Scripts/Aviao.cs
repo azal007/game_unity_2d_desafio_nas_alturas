@@ -22,6 +22,10 @@ public class Aviao : MonoBehaviour
     }
 
     private void Impulsionar() {
+        // Eliminate the acumulated force (from the gravity and from the clicks) that affects the plane
+        this.fisica.velocity = Vector2.zero;
+
+        // Push the plane up
         this.fisica.AddForce(Vector2.up * this.forcaImpulsaoCima, ForceMode2D.Impulse);
     }
 }
