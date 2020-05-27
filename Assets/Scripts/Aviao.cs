@@ -6,12 +6,14 @@ public class Aviao : MonoBehaviour
 {
     private Rigidbody2D fisica;
     [SerializeField]
-    private float forcaImpulsaoCima = 10;
+    private float forcaImpulsaoCima;
+    private Diretor diretor;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private void Awake() {
         this.fisica = this.GetComponent<Rigidbody2D>();
+
+        // Obtém o objeto diretor, declarado na Unity
+        this.diretor = GameObject.FindObjectOfType<Diretor>();
     }
 
     // Update is called once per frame
@@ -27,5 +29,12 @@ public class Aviao : MonoBehaviour
 
         // Push the plane up
         this.fisica.AddForce(Vector2.up * this.forcaImpulsaoCima, ForceMode2D.Impulse);
+    }
+
+    private void OnCollisionEnter2D(Collision2D colisao) {
+        // Stop simulating physics
+        this.fisica.simulated = false;
+
+        this.diretor.FinalizarJogo();
     }
 }
